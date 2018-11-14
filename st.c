@@ -1099,20 +1099,23 @@ kscrollup(const Arg* a)
 	}
 }
 
-
 void
 tscrolldown(int orig, int n, int copyhist)
 {
-	int i;
+	int i, j;
 	Line temp;
 
 	LIMIT(n, 0, term.bot-orig+1);
 
 	if (copyhist) {
-		term.histi = (term.histi - 1 + HISTSIZE) % HISTSIZE;
-		temp = term.hist[term.histi];
-		term.hist[term.histi] = term.line[term.bot];
-		term.line[term.bot] = temp;
+		for (i = term.histi - 1, j = 0; j < n; i--, j++) {
+			if (i == -1)
+				i = HISTSIZE - 1;
+			temp = term.hist[i];
+			term.hist[i] = term.line[term.bot - j];
+			term.line[term.bot - j] = temp;
+		}
+		term.histi = i + 1;
 	}
 
 	tsetdirt(orig, term.bot-n);
@@ -1130,16 +1133,20 @@ tscrolldown(int orig, int n, int copyhist)
 void
 tscrollup(int orig, int n, int copyhist)
 {
-	int i;
+	int i, j;
 	Line temp;
 
 	LIMIT(n, 0, term.bot-orig+1);
 
 	if (copyhist) {
-		term.histi = (term.histi + 1) % HISTSIZE;
-		temp = term.hist[term.histi];
-		term.hist[term.histi] = term.line[orig];
-		term.line[orig] = temp;
+		for (i = term.histi + 1, j = 0; j < n; i++, j++) {
+			if (i == HISTSIZE)
+				i = 0;
+			temp = term.hist[i];
+			term.hist[i] = term.line[orig + j];
+			term.line[orig + j] = temp;
+		}
+		term.histi = i - 1;
 	}
 
 	tclearregion(0, orig, term.col-1, orig+n-1);
@@ -1770,7 +1777,8 @@ csihandle(void)
 			tclearregion(0, term.c.y, term.c.x, term.c.y);
 			break;
 		case 2: /* all */
-			tclearregion(0, 0, term.col-1, term.row-1);
+			/* scroll instead of clear to preserve history */
+			tscrollup(term.top, term.row, 1);
 			break;
 		default:
 			goto unknown;
