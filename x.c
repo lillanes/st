@@ -1307,6 +1307,10 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		bg = &dc.col[base.bg];
 	}
 
+	/* Change bold black to bright black -- hacky fix for issue with htop */
+	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && base.fg == 0)
+		fg = &dc.col[8];
+
 	if (IS_SET(MODE_REVERSE)) {
 		if (fg == &dc.col[defaultfg]) {
 			fg = &dc.col[defaultbg];
