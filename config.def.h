@@ -5,8 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true";
+static char *font = "Go Mono:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
+static int ST_FC_BOLD_WEIGHT = FC_WEIGHT_SEMIBOLD; /* Go Mono uses this weight
+						      for bold, for some
+						      unexplained reason */
 
 /*
  * What program is execed by st depends of these precedence rules:
