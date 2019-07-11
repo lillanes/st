@@ -14,6 +14,7 @@ options:
 	@echo "CFLAGS  = $(STCFLAGS)"
 	@echo "LDFLAGS = $(STLDFLAGS)"
 	@echo "CC      = $(CC)"
+	@echo "PREFIX  = $(PREFIX)"
 
 config.h:
 	cp config.def.h config.h
