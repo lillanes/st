@@ -5,8 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "Go Mono:size=11:antialias=true:autohint=true";
 static int borderpx = 2;
+static int ST_FC_BOLD_WEIGHT = FC_WEIGHT_SEMIBOLD; /* Go Mono uses this weight
+						      for bold, for some
+						      unexplained reason */
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -84,31 +87,23 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
-
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
-
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
+	/* gruvbox colors */
+	"#1d2021", /*  0: bg (black)          */
+	"#cc241d", /*  1: red                 */
+	"#98971a", /*  2: green               */
+	"#d79921", /*  3: yellow              */
+	"#458588", /*  4: blue                */
+	"#b16286", /*  5: magenta (purple)    */
+	"#689d6a", /*  6: cyan (aqua)         */
+	"#a89984", /*  7: gray                */
+	"#928374", /*  8: bright black (gray) */
+	"#fb4934", /*  9: bright red          */
+	"#b8bb26", /* 10: bright green        */
+	"#fabd2f", /* 11: bright yellow       */
+	"#83a598", /* 12: bright blue         */
+	"#d3869b", /* 13: bright purple       */
+	"#8ec07c", /* 14: bright aqua         */
+	"#ebdbb2", /* 15: fg (bright gray)    */
 };
 
 
@@ -116,10 +111,10 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
+unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultcs = 15;
+static unsigned int defaultrcs = 0;
 
 /*
  * Default shape of cursor
@@ -156,8 +151,6 @@ static unsigned int defaultattr = 11;
  */
 static MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
-	{ Button4,              XK_ANY_MOD,     "\031" },
-	{ Button5,              XK_ANY_MOD,     "\005" },
 };
 
 /* Internal keyboard shortcuts. */
