@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Go Mono:size=11:antialias=true:autohint=true";
+static char *font = "Go Mono:size=10:antialias=true:autohint=true";
 static int borderpx = 2;
 static int ST_FC_BOLD_WEIGHT = FC_WEIGHT_SEMIBOLD; /* Go Mono uses this weight
 						      for bold, for some
