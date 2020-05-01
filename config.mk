@@ -1,5 +1,5 @@
 # st version
-VERSION = 0.8.2.lillanes
+VERSION = 0.8.3.lillanes
 
 # Customize below to fit your system
 
